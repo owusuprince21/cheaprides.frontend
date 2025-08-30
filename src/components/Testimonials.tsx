@@ -76,7 +76,10 @@ const testimonials: Testimonial[] = [
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const { ref, inView } = useInView({ threshold: 0.3 });``
+  const { ref, inView } = useInView({
+    triggerOnce: false,  // <--- now it updates every time
+    threshold: 0.3
+  });
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -199,7 +202,7 @@ export default function Testimonials() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+        <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
               <div className="text-center">
                 <div className="text-4xl font-bold text-blue-600 mb-2">
                   {inView && (
