@@ -202,13 +202,17 @@ export default function Testimonials() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
               <div className="text-center">
                 <div className="text-4xl font-bold text-blue-600 mb-2">
-                  <CountUp start={0} end={inView ? 200 : 0} duration={3} suffix="+" redraw={true} />
+                  {inView && (
+                   <CountUp key="customers" start={0} end={200} duration={3} suffix="+" />
+                  )}
                 </div>
                 <div className="text-gray-600">Customers</div>
               </div>
               <div className="text-center">
                 <div className="text-4xl font-bold text-blue-600 mb-2">
-                  <CountUp start={0} end={inView ? 100 : 0} duration={3} suffix="+" redraw={true} />
+                    {inView && (
+                  <CountUp key="cars" start={0} end={100} duration={3} suffix="+" />
+                    )}
                 </div>
                 <div className="text-gray-600">Cars Sold</div>
               </div>
