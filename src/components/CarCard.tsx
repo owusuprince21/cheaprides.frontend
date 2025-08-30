@@ -8,6 +8,7 @@ interface CarCardProps {
   showHotSaleBadge?: boolean; // Optional prop for showing hot sale badge
 }
 
+
 export default function CarCard({ car, showHotSaleBadge }: CarCardProps) {
   const formatPrice = (price: string) => {
     return new Intl.NumberFormat('en-GH', {
@@ -15,7 +16,9 @@ export default function CarCard({ car, showHotSaleBadge }: CarCardProps) {
       currency: 'GHS',
       minimumFractionDigits: 0,
     }).format(parseFloat(price));
+    
   };
+  console.log(car)
 
   return (
     <Link href={`/cars/${car.slug}`}>
