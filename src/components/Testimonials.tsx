@@ -76,7 +76,7 @@ const testimonials: Testimonial[] = [
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });``
+  const { ref, inView } = useInView({ threshold: 0.3 });``
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -202,13 +202,13 @@ export default function Testimonials() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
               <div className="text-center">
                 <div className="text-4xl font-bold text-blue-600 mb-2">
-                  {inView && <CountUp end={200} duration={3} suffix="+" />}
+                  <CountUp start={0} end={inView ? 200 : 0} duration={3} suffix="+" redraw={true} />
                 </div>
                 <div className="text-gray-600">Customers</div>
               </div>
               <div className="text-center">
                 <div className="text-4xl font-bold text-blue-600 mb-2">
-                  {inView && <CountUp end={100} duration={3} suffix="+" />}
+                  <CountUp start={0} end={inView ? 100 : 0} duration={3} suffix="+" redraw={true} />
                 </div>
                 <div className="text-gray-600">Cars Sold</div>
               </div>
