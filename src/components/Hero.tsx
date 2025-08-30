@@ -31,7 +31,7 @@ export default function Hero() {
           </h1>
           
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-            Discover quality used cars at unbeatable prices in Ghana. 
+            Discover quality new and used vehicles at unbeatable prices in Ghana. 
             Your dream car is just a click away!
           </p>
           
