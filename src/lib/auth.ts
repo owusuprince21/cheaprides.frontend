@@ -60,8 +60,8 @@ export const login = async (username: string, password: string): Promise<AuthRes
 };
 
 
-export const register = async (username: string, email: string, password: string, firstName: string, lastName: string): Promise<AuthResponse> => {
-  const response = await api.post('/auth/register/', { username, email, password, firstName, lastName });
+export const register = async (username: string, email: string, password: string, first_name: string, last_name: string): Promise<AuthResponse> => {
+  const response = await api.post('/auth/register/', { username, email, password, first_name, last_name });
   const { access, refresh, user } = response.data;
   
   // Clear any existing tokens first
