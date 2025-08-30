@@ -27,8 +27,8 @@ export default function CarCard({ car, showHotSaleBadge }: CarCardProps) {
           <Image
             src={
     car.additional_images?.[0]?.image
-      ? `https://res.cloudinary.com/YOUR_CLOUD_NAME/${car.additional_images[0].image}`
-      : `https://res.cloudinary.com/YOUR_CLOUD_NAME/${car.main_image}`
+      ? `https://res.cloudinary.com/daebnxnfj/${car.additional_images[0].image}`
+      : `https://res.cloudinary.com/daebnxnfj/${car.main_image}`
     }
             alt={car.title}
             fill
