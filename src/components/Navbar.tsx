@@ -6,10 +6,11 @@ import { useRouter } from 'next/navigation';
 import { LogOut, Menu, X } from 'lucide-react';
 import { logout, getCurrentUser, isAdmin, User} from '@/lib/auth';
 import { User as UserType } from '@/types/car';
+import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
 
 export default function Navbar() {
-  const [user, setUser] = useState<UserType | null>(null);
+  const { user, setUser, logout} = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userIsAdmin, setUserIsAdmin] = useState(false);
   // const [mounted, setMounted] = useState(false);
