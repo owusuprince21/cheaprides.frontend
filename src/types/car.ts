@@ -1,11 +1,56 @@
+// export interface Car {
+//   is_hot_sale: boolean;
+//   id: number;
+//   title: string;
+//   slug: string;
+//   description?: string;
+//   price: string;
+//   main_image: string;
+//   make: string;
+//   model: string;
+//   year: number;
+//   mileage: number;
+//   fuel_type: string;
+//   transmission: string;
+//   condition: string;
+//   color?: string;
+//   engine_size?: string;
+//   doors?: number;
+//   seats?: number;
+//   features?: string;
+//   features_list?: string[];
+//   additional_images?: CarImage[];
+//   is_featured: boolean;
+//   created_at?: string;
+//   primary_damage?: string; // New field for primary damage
+//   keys?: boolean; // New field for keys availability
+//   // cylinders?: number; // New field for number of cylinders
+//   drive?: string; // New field for drive type (e.g., FWD, AWD, RWD)
+//   body_style?: string; // New field for body style (e.g.,
+
+// }
+
+
+
+// export interface CarImage {
+//   id: number;
+//   image: string;
+//   caption: string;
+// }
+
+export interface CarImage {
+  id: number;
+  image: string;       // Cloudinary URL string
+  caption?: string;    // Optional caption
+}
+
 export interface Car {
-  is_hot_sale: boolean;
   id: number;
   title: string;
   slug: string;
   description?: string;
-  price: string;
-  main_image: string;
+  price: string;                 // Serialized as string from Django DecimalField
+  main_image: string;            // Cloudinary URL
   make: string;
   model: string;
   year: number;
@@ -17,26 +62,18 @@ export interface Car {
   engine_size?: string;
   doors?: number;
   seats?: number;
-  features?: string;
-  features_list?: string[];
-  additional_images?: CarImage[];
+  features?: string;             // Comma-separated string from Django
+  features_list?: string[];      // Optional: parsed array from `get_features_list()`
+  additional_images?: CarImage[]; 
+  is_hot_sale: boolean;
   is_featured: boolean;
-  created_at?: string;
-  primary_damage?: string; // New field for primary damage
-  keys?: boolean; // New field for keys availability
-  // cylinders?: number; // New field for number of cylinders
-  drive?: string; // New field for drive type (e.g., FWD, AWD, RWD)
-  body_style?: string; // New field for body style (e.g.,
-
+  created_at?: string;           // ISO string from Django DateTimeField
+  primary_damage?: string;
+  keys?: boolean;
+  drive?: string;
+  body_style?: string;
 }
 
-
-
-export interface CarImage {
-  id: number;
-  image: string;
-  caption: string;
-}
 
 export interface User {
   is_superuser: boolean;
