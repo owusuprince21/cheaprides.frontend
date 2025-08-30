@@ -22,7 +22,7 @@ export default function CarCard({ car, showHotSaleBadge }: CarCardProps) {
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer">
         <div className="relative h-48">
           <Image
-            src={car.main_image}
+            src={car.additional_images?.[0]?.image || car.main_image}
             alt={car.title}
             fill
             className="object-cover"
