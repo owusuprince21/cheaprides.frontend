@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { getCurrentUser, login } from '@/lib/auth';
+import { login } from '@/lib/auth';
 import { Eye, EyeOff } from 'lucide-react';
 import Image from 'next/image';
 import { useAuth } from '@/context/AuthContext';
@@ -22,29 +22,22 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError('');
-    
 
     try {
-      await login(username, password);
-      const user = getCurrentUser(); // pull user from localStorage
-      if (user) {
-        setLoggedIn(user); // update context
-        // router.push('/');
-        toast({
-          title: "Login Successful!",
-          description: `Welcome back, ${user.username}!`,
-        });
-        setTimeout(() => {
-        router.push('/');
-        // Force a page refresh to update navbar state
-        window.location.href = '/';
-      }, 100);
-      } else {
-        setError('Failed to retrieve user after login');
-      }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      setError(error.response?.data?.error || 'Login failed');
+      // login returns { access, refresh, user }
+      const { user } = await login(username, password);
+
+      // Update AuthContext with logged in user
+      setLoggedIn(user!);
+
+      toast({
+        title: 'Login Successful!',
+        description: `Welcome back, ${user!.username}!`,
+      });
+
+      router.push('/');
+    } catch (err: any) {
+      setError(err.response?.data?.error || 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -54,20 +47,23 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-                        <Image
-                            src="/logo2.png" // Assuming it's logo1.png, adjust if it's .jpg or .svg
-                            alt="Logo"
-                            width={100}
-                            height={100}
-                            className="rounded-full"
-                          />
+          <Image
+            src="/logo2.png"
+            alt="Logo"
+            width={100}
+            height={100}
+            className="rounded-full"
+          />
         </div>
         <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
           Sign in to your account
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           Or{' '}
-          <Link href="/auth/register" className="font-medium text-blue-600 hover:text-blue-500">
+          <Link
+            href="/auth/register"
+            className="font-medium text-blue-600 hover:text-blue-500"
+          >
             create a new account
           </Link>
         </p>
@@ -83,7 +79,10 @@ export default function LoginPage() {
             )}
 
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-black">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-black"
+              >
                 Username
               </label>
               <div className="mt-1">
@@ -94,14 +93,17 @@ export default function LoginPage() {
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Enter your username"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-black">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-black"
+              >
                 Password
               </label>
               <div className="mt-1 relative">
@@ -112,8 +114,8 @@ export default function LoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 pr-10 border text-black border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Enter your password"
+                  className="appearance-none block w-full px-3 py-2 pr-10 border text-black border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
                 <button
                   type="button"
