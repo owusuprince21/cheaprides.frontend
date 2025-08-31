@@ -7,12 +7,12 @@ import { X } from "lucide-react"
 
 const leaders = [
   {
-    id: "priscilla",
-    name: "Priscilla Antwi",
+    id: "enoch",
+    name: "Enoch Nii Cheiku Armah",
     role: "Chief Executive Officer",
     image:
-      "https://res.cloudinary.com/daebnxnfj/image/upload/v1756658851/Made_to_measure_%EF%B8%8F_imman_casual_fundimmojatu_fkg0fi.jpg",
-    bio: "Priscilla has over 10 years of experience in leadership and management. She has been pivotal in driving strategic initiatives at Cheaprides Ghana.",
+      "https://res.cloudinary.com/daebnxnfj/image/upload/v1756675459/Un_h%C3%B4tesse_de_l_air_de_taille_moyenne_posant_llm4km.jpg",
+    bio: "Enoch has over 10 years of experience in leadership and management. She has been pivotal in driving strategic initiatives at Cheaprides Ghana.",
   },
   {
     id: "gabriel",
