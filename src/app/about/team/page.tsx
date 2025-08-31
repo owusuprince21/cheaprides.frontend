@@ -3,27 +3,31 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { X } from "lucide-react"
 
 const leaders = [
   {
     id: "priscilla",
     name: "Priscilla Antwi",
     role: "Associate Director",
-    image: "https://res.cloudinary.com/daebnxnfj/image/upload/v1756658851/Made_to_measure_%EF%B8%8F_imman_casual_fundimmojatu_fkg0fi.jpg",
+    image:
+      "https://res.cloudinary.com/daebnxnfj/image/upload/v1756658851/Made_to_measure_%EF%B8%8F_imman_casual_fundimmojatu_fkg0fi.jpg",
     bio: "Priscilla has over 10 years of experience in leadership and management. She has been pivotal in driving strategic initiatives at Cheaprides Ghana.",
   },
   {
     id: "gabriel",
     name: "Gabriel Antwi Asempa",
     role: "Chief Executive Officer",
-    image: "https://res.cloudinary.com/daebnxnfj/image/upload/v1756658708/download_biv7wp.jpg",
+    image:
+      "https://res.cloudinary.com/daebnxnfj/image/upload/v1756658708/download_biv7wp.jpg",
     bio: "Gabriel drives strategy and execution for Cheaprides Ghana. His leadership has shaped the company into a trusted mobility provider.",
   },
   {
     id: "bright",
     name: "Adwoa Adepa Mensah",
     role: "Managing Director",
-    image: "https://res.cloudinary.com/daebnxnfj/image/upload/v1756658708/download_1_kbgb7k.jpg",
+    image:
+      "https://res.cloudinary.com/daebnxnfj/image/upload/v1756658708/download_1_kbgb7k.jpg",
     bio: "Bright oversees company growth and innovation initiatives. His mission is to transform transport accessibility in Ghana.",
   },
 ]
@@ -75,19 +79,23 @@ export default function LeadershipSection() {
 
       {/* Modal */}
       {selectedLeader && (
-        <div className="fixed inset-0 flex items-start justify-center bg-black/50 z-50">
+        <div
+          className="fixed inset-0 flex items-start justify-center bg-black/50 z-50"
+          onClick={() => setSelectedLeader(null)} // click outside closes modal
+        >
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.3 }}
             className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl relative mt-20"
+            onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
           >
             {/* Close button */}
             <button
               onClick={() => setSelectedLeader(null)}
-              className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 font-bold"
+              className="absolute top-4 right-4 text-gray-600 hover:text-gray-900"
             >
-              ✕
+              <X className="h-7 w-7" /> {/* bigger on mobile */}
             </button>
 
             <div className="flex flex-col items-center">
@@ -99,7 +107,9 @@ export default function LeadershipSection() {
                   className="object-cover"
                 />
               </div>
-              <h3 className="text-xl font-bold text-purple-900">{selectedLeader.name}</h3>
+              <h3 className="text-xl font-bold text-purple-900">
+                {selectedLeader.name}
+              </h3>
               <p className="text-sm text-gray-600 mb-4">{selectedLeader.role}</p>
               <p className="text-gray-700 text-center">{selectedLeader.bio}</p>
             </div>
