@@ -273,7 +273,7 @@ const handleContactWhatsApp = () => {
                   <Gauge className="h-5 w-5 text-black" />
                   <div>
                     <p className="text-sm text-black">Mileage</p>
-                    <p className="font-semibold text-black">{car.mileage.toLocaleString()} km</p>
+                    <p className="font-semibold text-black">{car.mileage.toLocaleString()} mi</p>
                   </div>
                 </div>
                 
