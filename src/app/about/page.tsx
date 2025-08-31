@@ -27,7 +27,7 @@ export default function AboutPage() {
       {/* 2. Our Pledge */}
       <section className="py-16 px-6 md:px-20 grid md:grid-cols-2 gap-10 items-center">
         <div>
-          <h2 className="text-3xl font-bold mb-4">Our Pledge to You</h2>
+          <h2 className="text-4xl font-bold text-purple-900 mb-12">Our Pledge to You</h2>
           <p className="mb-3">
             Our mission is to provide affordable vehicles while ensuring 
             trust, transparency, and convenience. 
@@ -50,7 +50,7 @@ export default function AboutPage() {
 
       {/* 3. Our Values */}
       <section className="bg-gray-100 py-16 px-6 md:px-20 text-center">
-        <h2 className="text-3xl font-bold mb-10">Our Values</h2>
+        <h2 className="text-4xl font-bold text-purple-900 mb-12">Our Values</h2>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
             <h3 className="font-semibold text-xl mb-3">Trust</h3>
