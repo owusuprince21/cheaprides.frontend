@@ -12,7 +12,7 @@ const leaders = [
     role: "Chief Executive Officer",
     image:
       "https://res.cloudinary.com/daebnxnfj/image/upload/v1756675459/Un_h%C3%B4tesse_de_l_air_de_taille_moyenne_posant_llm4km.jpg",
-    bio: "Enoch has over 10 years of experience in leadership and management. She has been pivotal in driving strategic initiatives at Cheaprides Ghana.",
+    bio: "Enoch has over 10 years of experience in leadership and management. He has been pivotal in driving strategic initiatives at Cheaprides Ghana.",
   },
   {
     id: "gabriel",
