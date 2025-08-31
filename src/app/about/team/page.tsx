@@ -23,12 +23,12 @@ const leaders = [
     bio: "Gabriel drives strategy and execution for Cheaprides Ghana. His leadership has shaped the company into a trusted mobility provider.",
   },
   {
-    id: "bright",
+    id: "adwoa",
     name: "Adwoa Adepa Mensah",
     role: "Associate Director",
     image:
       "https://res.cloudinary.com/daebnxnfj/image/upload/v1756658708/download_1_kbgb7k.jpg",
-    bio: "Bright oversees company growth and innovation initiatives. His mission is to transform transport accessibility in Ghana.",
+    bio: "Adwoa oversees company growth and innovation initiatives. His mission is to transform transport accessibility in Ghana.",
   },
 ]
 
