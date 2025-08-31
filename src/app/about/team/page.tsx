@@ -11,7 +11,7 @@ const leaders = [
     name: "Enoch Nii Cheiku Armah",
     role: "Chief Executive Officer",
     image:
-      "https://res.cloudinary.com/daebnxnfj/image/upload/v1756675459/Un_h%C3%B4tesse_de_l_air_de_taille_moyenne_posant_llm4km.jpg",
+      "https://res.cloudinary.com/daebnxnfj/image/upload/v1756682031/WhatsApp_Image_2025-08-31_at_22.40.35_43eae353_i01hou.jpg",
     bio: "Enoch has over 10 years of experience in leadership and management. He has been pivotal in driving strategic initiatives at Cheaprides Ghana.",
   },
   {
