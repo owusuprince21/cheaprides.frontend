@@ -44,7 +44,7 @@ export default function LeadershipSection() {
           transition={{ duration: 0.7 }}
           className="text-4xl font-bold text-purple-900 mb-12"
         >
-          Our Leadership
+          Our Team
         </motion.h2>
 
         {/* Leader Cards */}
