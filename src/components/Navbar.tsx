@@ -162,18 +162,18 @@ export default function Navbar() {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t">
             <div className="flex flex-col space-y-4">
-              <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors">
+              <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors"  onClick={() => setIsMenuOpen(false)}>
                 Home
               </Link>
-              <Link href="/cars" className="text-gray-700 hover:text-blue-600 transition-colors">
+              <Link href="/cars" className="text-gray-700 hover:text-blue-600 transition-colors"  onClick={() => setIsMenuOpen(false)}>
                 Cars
               </Link>
-              <Link href="/about" className="text-gray-700 hover:text-blue-600 transition-colors">
+              <Link href="/about" className="text-gray-700 hover:text-blue-600 transition-colors"  onClick={() => setIsMenuOpen(false)}>
                 About Us
               </Link>
               
               {userIsAdmin && (
-                <Link href="/admin" className="text-gray-700 hover:text-blue-600 transition-colors">
+                <Link href="/admin" className="text-gray-700 hover:text-blue-600 transition-colors"  onClick={() => setIsMenuOpen(false)}>
                   Admin
                 </Link>
               )}
@@ -194,13 +194,13 @@ export default function Navbar() {
                   <Link
                     href="/auth/login"
                     className="text-gray-700 hover:text-blue-600 transition-colors"
-                  >
+                   onClick={() => setIsMenuOpen(false)}>
                     Login
                   </Link>
                   <Link
                     href="/auth/register"
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors w-fit"
-                  >
+                    className="text-gray-700 hover:text-blue-600 transition-colors"
+                   onClick={() => setIsMenuOpen(false)}>
                     Register
                   </Link>
                 </>
