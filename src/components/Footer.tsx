@@ -20,7 +20,7 @@ export default function Footer() {
               <span className="text-xl font-bold">Cheap Rides Gh</span>
             </div>
             <p className="text-gray-300 mb-4">
-              Your trusted partner for quality new and used vehicles in Ghana. Find your dream car at unbeatable prices.
+              Your trusted partner for quality used cars in Ghana. Find your dream car at unbeatable prices.
             </p>
             <div className="flex space-x-4">
               <a
@@ -64,9 +64,10 @@ export default function Footer() {
                   All Cars
                 </Link>
               </li>
+              
               <li>
-                <Link href="/auth/login" className="text-gray-300 hover:text-white transition-colors">
-                  Sign In
+                <Link href="/about" className="text-gray-300 hover:text-white transition-colors">
+                  About Us
                 </Link>
               </li>
               <li>
