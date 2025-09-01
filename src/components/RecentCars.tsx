@@ -6,6 +6,7 @@ import CarCard from './CarCard';
 import { Car } from '@/types/car';
 import api from '@/lib/api';
 import { ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function RecentCars() {
   const [recentCars, setRecentCars] = useState<Car[]>([]);
@@ -47,6 +48,13 @@ export default function RecentCars() {
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-12">
+                            <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center mb-16"
+                >
           <h2 className="text-3xl font-bold text-gray-900">
             Recently Added Cars
           </h2>
@@ -57,14 +65,25 @@ export default function RecentCars() {
             <span>View All</span>
             <ArrowRight className="h-5 w-5" />
           </Link>
+          </motion.div>
         </div>
         
+
         {recentCars.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  // className="text-center mb-16"
+                >
           {recentCars.map((car) => (
               <CarCard key={car.id} car={car} />
          ))}
+          </motion.div>
           </div>
+         
         ) : (
           <p className="text-center text-gray-600">No cars available at the moment.</p>
         )}
