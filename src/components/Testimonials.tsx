@@ -5,6 +5,7 @@ import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import Image from 'next/image';
 import { useInView } from 'react-intersection-observer';
 import CountUp from 'react-countup';
+import { motion } from 'framer-motion';
 
 interface Testimonial {
   id: number;
@@ -120,6 +121,13 @@ export default function Testimonials() {
   return (
     <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center mb-16"
+                >
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
             What Our Customers Say
@@ -225,6 +233,7 @@ export default function Testimonials() {
               </div>
         
         </div>
+        </motion.div>
       </div>
     </section>
   );
