@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CarCard from './CarCard';
 import { Car } from '@/types/car';
 import api from '@/lib/api';
+import { motion } from 'framer-motion';
 
 export default function CarCarousel() {
   const [featuredCars, setFeaturedCars] = useState<Car[]>([]);
@@ -55,10 +56,18 @@ export default function CarCarousel() {
     return (
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center mb-16"
+                >
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
             Hot Sales Cars
           </h2>
           <p className="text-center text-gray-600">No featured cars available at the moment.</p>
+        </motion.div>
         </div>
       </section>
     );
@@ -67,6 +76,13 @@ export default function CarCarousel() {
   return (
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center mb-16"
+                ></motion.div>
         <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
           Hot Sales Cars
         </h2>
@@ -101,6 +117,7 @@ export default function CarCarousel() {
                 </div>
               ))}
             </div>
+             
           </div>
         </div>
       </div>
