@@ -164,7 +164,7 @@ export default function Hero() {
                   y: [0, -10, 0],
                 }}
                 transition={{ 
-                  duration: 4,
+                  duration: 3,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
