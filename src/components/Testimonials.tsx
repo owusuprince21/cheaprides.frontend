@@ -121,25 +121,50 @@ export default function Testimonials() {
   return (
     <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
+        <div className="text-center mb-12">
+                    <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
                   className="text-center mb-16"
                 >
-        <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
             What Our Customers Say
           </h2>
+          </motion.div>
+
+                              <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center mb-16"
+                >
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Don&apos;t just take our word for it. Here&apos;s what our satisfied customers have to say about their experience with Cheap Rides Gh.
           </p>
+          </motion.div>
         </div>
-
+            
+                  <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center mb-16"
+                >
         <div className="relative max-w-4xl mx-auto">
           {/* Main Testimonial Card */}
           <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 relative overflow-hidden">
+            
+                  <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center mb-16"
+                >
             <Quote className="absolute top-6 right-6 h-12 w-12 text-blue-100" />
             
             <div className="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
@@ -176,6 +201,7 @@ export default function Testimonials() {
                 </div>
               </div>
             </div>
+            </motion.div>
           </div>
 
           {/* Navigation Buttons */}
