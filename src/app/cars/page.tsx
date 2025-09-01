@@ -5,6 +5,7 @@ import CarCard from '@/components/CarCard';
 import { Car } from '@/types/car';
 import api from '@/lib/api';
 import { Search } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function CarsPage() {
   const [cars, setCars] = useState<Car[]>([]);
@@ -59,8 +60,15 @@ export default function CarsPage() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center mb-16"
+                >
           <h1 className="text-3xl font-bold text-gray-900 mb-4">All Cars</h1>
-          
+          </motion.div>
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -71,19 +79,29 @@ export default function CarsPage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
+              
             </div>
           </div>
           
           <p className="text-gray-600">
             Showing {filteredCars.length} of {cars.length} cars
           </p>
+         
         </div>
         
         {filteredCars.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                 <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center mb-16"
+                >
             {filteredCars.map((car) => (
               <CarCard key={car.id} car={car} />
             ))}
+            </motion.div>
           </div>
         ) : (
           <div className="text-center py-12">
