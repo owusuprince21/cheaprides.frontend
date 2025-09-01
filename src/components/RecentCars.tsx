@@ -48,17 +48,9 @@ export default function RecentCars() {
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-12">
-                            <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                  viewport={{ once: true }}
-                  className="text-center mb-16"
-                >
           <h2 className="text-3xl font-bold text-gray-900">
             Recently Added Cars
           </h2>
-      </motion.div>
           <Link
             href="/cars"
             className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-semibold"
@@ -66,7 +58,6 @@ export default function RecentCars() {
             <span>View All</span>
             <ArrowRight className="h-5 w-5" />
           </Link>
-          x
         </div>
         
 

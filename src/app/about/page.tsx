@@ -25,9 +25,18 @@ export default function AboutPage() {
       </section>
 
       {/* 2. Our Pledge */}
+                              <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center"
+                >
       <section className="py-16 px-6 md:px-20 grid md:grid-cols-2 gap-10 items-center">
         <div>
+
           <h2 className="text-4xl font-bold text-purple-900 mb-12">Our Pledge to You</h2>
+          
           <p className="mb-3">
             Our mission is to provide affordable vehicles while ensuring 
             trust, transparency, and convenience. 
@@ -47,11 +56,26 @@ export default function AboutPage() {
           />
         </div>
       </section>
-
+    </motion.div>
       {/* 3. Our Values */}
       <section className="bg-gray-100 py-16 px-6 md:px-20 text-center">
+                                      <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center"
+                >
         <h2 className="text-4xl font-bold text-purple-900 mb-12">Our Values</h2>
+        </motion.div>
         <div className="grid md:grid-cols-3 gap-8">
+                                                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center"
+                >
           <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
             <h3 className="font-semibold text-xl mb-3">Trust</h3>
             <p>
@@ -70,6 +94,7 @@ export default function AboutPage() {
               Your satisfaction drives us — before, during, and after purchase.
             </p>
           </div>
+          </motion.div>
         </div>
       </section>
 

@@ -44,7 +44,7 @@ export default function CarCarousel() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
-                  className="text-center mb-16"
+                  className="text-center"
                 >
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
              Hot Sales Cars
@@ -69,7 +69,7 @@ export default function CarCarousel() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
-                  className="text-center mb-16"
+                  className="text-center"
                 >
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
             Hot Sales Cars
