@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50 py-20 lg:py-32">
+    <section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50 pt-10 lg:pt-16 pb-20 lg:pb-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}
@@ -26,7 +26,7 @@ export default function Hero() {
               className="inline-flex items-center bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium"
             >
               <Award className="h-4 w-4 mr-2" />
-              #1 Luxury Car Dealer in {new Date().getFullYear()}
+              #1 Luxury Car Dealer {new Date().getFullYear()}
             </motion.div>
 
             {/* Main Heading */}
@@ -65,7 +65,7 @@ export default function Hero() {
             >
               <div className="flex items-center">
                 <Star className="h-5 w-5 text-yellow-500 mr-2" />
-                4.5/5 Customer Rating
+                4.0/5 Customer Rating
               </div>
               <div className="flex items-center">
                 <Shield className="h-5 w-5 text-green-600 mr-2" />
@@ -116,7 +116,7 @@ export default function Hero() {
                 <div className="text-xs sm:text-sm text-gray-600">Happy Customers</div>
               </div>
               <div className="text-center">
-                <div className="text-xl sm:text-2xl font-bold text-gray-900">5+</div>
+                <div className="text-xl sm:text-2xl font-bold text-gray-900">5</div>
                 <div className="text-xs sm:text-sm text-gray-600">Years Experience</div>
               </div>
             </motion.div>
@@ -168,14 +168,14 @@ export default function Hero() {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="relative z-10"
+                className="relative z-10 -mt-5"
               >
               <Image
-                src="https://res.cloudinary.com/daebnxnfj/image/upload/v1756659740/Q8_aef1sd.jpg"
+                src="https://res.cloudinary.com/daebnxnfj/image/upload/v1756763666/hero_image_ti6atj.png"
                 alt="Luxury Car"
                 width={800}   // choose a base width
-                height={500}  // choose a base height
-                className="w-full h-48 sm:h-64 lg:h-auto object-cover lg:object-contain rounded-2xl shadow-2xl"
+                height={900}  // choose a base height
+                className="w-full h-100 sm:h-80 lg:h-auto object-cover lg:object-contain rounded-2xl shadow-2xl"
               />
 
                 
