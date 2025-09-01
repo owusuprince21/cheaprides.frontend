@@ -175,7 +175,7 @@ export default function Hero() {
                 alt="Luxury Car"
                 width={800}   // choose a base width
                 height={900}  // choose a base height
-                className="w-full h-100 sm:h-80 lg:h-auto object-cover lg:object-contain rounded-2xl shadow-2xl"
+                className="w-full h-96 sm:h-80 lg:h-auto object-cover lg:object-contain rounded-2xl shadow-2xl"
               />
 
                 
