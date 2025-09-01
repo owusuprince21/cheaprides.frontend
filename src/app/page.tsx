@@ -6,6 +6,7 @@ import Testimonials from '@/components/Testimonials';
 
 // app/page.tsx
 import type { Metadata } from "next";
+import WhyChoose from '@/components/WhyChoose';
 
 export const metadata: Metadata = {
   title: "CheapRides – Find Your Perfect Cheap Rides",
@@ -58,6 +59,7 @@ export default function Home() {
       <Hero />
       <CarCarousel />
       <RecentCars />
+      <WhyChoose />
       <Testimonials />
       <Footer />
     </div>
