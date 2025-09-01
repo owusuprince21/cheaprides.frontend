@@ -26,7 +26,7 @@ export default function Hero() {
               className="inline-flex items-center bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium"
             >
               <Award className="h-4 w-4 mr-2" />
-              #1 Luxury Car Dealer {new Date().getFullYear()}
+              #1 Luxury Car Dealer in {new Date().getFullYear()}
             </motion.div>
 
             {/* Main Heading */}
@@ -65,7 +65,7 @@ export default function Hero() {
             >
               <div className="flex items-center">
                 <Star className="h-5 w-5 text-yellow-500 mr-2" />
-                4.0/5 Customer Rating
+                4.5/5 Customer Rating
               </div>
               <div className="flex items-center">
                 <Shield className="h-5 w-5 text-green-600 mr-2" />
@@ -116,7 +116,7 @@ export default function Hero() {
                 <div className="text-xs sm:text-sm text-gray-600">Happy Customers</div>
               </div>
               <div className="text-center">
-                <div className="text-xl sm:text-2xl font-bold text-gray-900">5</div>
+                <div className="text-xl sm:text-2xl font-bold text-gray-900">5+</div>
                 <div className="text-xs sm:text-sm text-gray-600">Years Experience</div>
               </div>
             </motion.div>
