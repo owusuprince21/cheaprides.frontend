@@ -69,13 +69,7 @@ export default function AboutPage() {
         <h2 className="text-4xl font-bold text-purple-900 mb-12">Our Values</h2>
         </motion.div>
         <div className="grid md:grid-cols-3 gap-8">
-                                                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                  viewport={{ once: true }}
-                  className="text-center"
-                >
+
           <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
             <h3 className="font-semibold text-xl mb-3">Trust</h3>
             <p>
@@ -94,7 +88,6 @@ export default function AboutPage() {
               Your satisfaction drives us — before, during, and after purchase.
             </p>
           </div>
-          </motion.div>
         </div>
       </section>
 
