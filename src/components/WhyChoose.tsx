@@ -29,8 +29,8 @@ const services = [
   },
   {
     icon: Truck,
-    title: 'Free Delivery',
-    description: 'Complimentary delivery within 50 miles',
+    title: 'Test Driving',
+    description: 'Complimentary test drives available',
     color: 'text-orange-600',
     bgColor: 'bg-orange-100'
   },
