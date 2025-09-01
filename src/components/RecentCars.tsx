@@ -58,6 +58,7 @@ export default function RecentCars() {
           <h2 className="text-3xl font-bold text-gray-900">
             Recently Added Cars
           </h2>
+      </motion.div>
           <Link
             href="/cars"
             className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-semibold"
@@ -65,7 +66,7 @@ export default function RecentCars() {
             <span>View All</span>
             <ArrowRight className="h-5 w-5" />
           </Link>
-          </motion.div>
+          x
         </div>
         
 
