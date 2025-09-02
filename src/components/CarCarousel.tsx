@@ -11,7 +11,6 @@ export default function CarCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const fetchFeaturedCars = async () => {
@@ -30,18 +29,18 @@ export default function CarCarousel() {
 
   const nextSlide = () => {
     if (scrollRef.current && window.innerWidth < 768) {
-      // Mobile: horizontal scroll
+      // Mobile scroll
       const container = scrollRef.current;
       const maxScroll = container.scrollWidth - container.clientWidth;
 
-      if (Math.abs(container.scrollLeft - maxScroll) < 10) {
-        // At the end → loop back to start
+      if (container.scrollLeft >= maxScroll - 10) {
+        // At the end → loop back
         container.scrollTo({ left: 0, behavior: 'smooth' });
       } else {
         container.scrollBy({ left: container.clientWidth, behavior: 'smooth' });
       }
     } else {
-      // Desktop: keep original looping behavior
+      // Desktop loop
       setCurrentIndex(
         (prev) => (prev + 1) % Math.max(1, featuredCars.length - 2)
       );
@@ -50,7 +49,7 @@ export default function CarCarousel() {
 
   const prevSlide = () => {
     if (scrollRef.current && window.innerWidth < 768) {
-      // Mobile: horizontal scroll
+      // Mobile scroll
       const container = scrollRef.current;
 
       if (container.scrollLeft <= 0) {
@@ -60,7 +59,7 @@ export default function CarCarousel() {
         container.scrollBy({ left: -container.clientWidth, behavior: 'smooth' });
       }
     } else {
-      // Desktop: keep original looping behavior
+      // Desktop loop
       setCurrentIndex(
         (prev) =>
           (prev - 1 + Math.max(1, featuredCars.length - 2)) %
@@ -68,24 +67,6 @@ export default function CarCarousel() {
       );
     }
   };
-
-  // 🔥 Auto-scroll setup
-  useEffect(() => {
-    if (featuredCars.length === 0) return;
-
-    // clear any previous auto-scroll
-    if (autoScrollRef.current) {
-      clearInterval(autoScrollRef.current);
-    }
-
-    autoScrollRef.current = setInterval(() => {
-      nextSlide();
-    }, 5000); // every 5 seconds
-
-    return () => {
-      if (autoScrollRef.current) clearInterval(autoScrollRef.current);
-    };
-  }, [featuredCars, currentIndex]);
 
   if (loading) {
     return (
@@ -160,7 +141,7 @@ export default function CarCarousel() {
             ))}
           </div>
 
-          {/* Desktop: unchanged original sliding */}
+          {/* Desktop: unchanged */}
           <div className="hidden md:block overflow-hidden">
             <div
               className="flex transition-transform duration-300 ease-in-out"
