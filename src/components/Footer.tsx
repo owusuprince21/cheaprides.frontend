@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Facebook, Twitter, Instagram, Phone, Mail, MapPin } from 'lucide-react';
 import Image from 'next/image';
+import { FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
   return (
@@ -37,7 +38,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-blue-400 transition-colors"
               >
-                <Twitter className="h-6 w-6" />
+                <FaXTwitter className="h-6 w-6 hover:text-sky-500" />
               </a>
               <a
                 href="https://instagram.com/cheapridesgh"

@@ -254,13 +254,13 @@ export default function Navbar() {
           </div>
 
           <div className="flex space-x-4 text-gray-600">
-            <Link href="#" target="_blank" aria-label="Facebook">
+            <Link href="https://facebook.com/cheapridesgh" target="_blank" aria-label="Facebook">
               <Facebook className="h-5 w-5 hover:text-blue-600" />
             </Link>
-            <Link href="#" target="_blank" aria-label="Instagram">
+            <Link href="https://instagram.com/cheapridesgh" target="_blank" aria-label="Instagram">
               <Instagram className="h-5 w-5 hover:text-pink-600" />
             </Link>
-            <Link href="#" target="_blank" aria-label="Twitter">
+            <Link href="https://twitter.com/cheapridesgh" target="_blank" aria-label="Twitter">
               <FaXTwitter className="h-5 w-5 hover:text-sky-500" />
             </Link>
             <Link href="mailto:info@cheapridesgh.com" aria-label="Email">
