@@ -7,6 +7,7 @@ import { LogOut, Menu, X, Facebook, Instagram, Twitter, Mail } from 'lucide-reac
 import { logout, isAuthenticated, fetchAndUpdateUser } from '@/lib/auth';
 import { User as UserType } from '@/types/car';
 import Image from 'next/image';
+import { FaXTwitter } from "react-icons/fa6";
 
 export default function Navbar() {
   const [user, setUser] = useState<UserType | null>(null);
@@ -260,7 +261,7 @@ export default function Navbar() {
               <Instagram className="h-5 w-5 hover:text-pink-600" />
             </Link>
             <Link href="#" target="_blank" aria-label="Twitter">
-              <Twitter className="h-5 w-5 hover:text-sky-500" />
+              <FaXTwitter className="h-5 w-5 hover:text-sky-500" />
             </Link>
             <Link href="mailto:info@cheapridesgh.com" aria-label="Email">
               <Mail className="h-5 w-5 hover:text-red-500" />
