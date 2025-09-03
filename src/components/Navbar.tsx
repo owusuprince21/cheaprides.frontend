@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { LogOut, Menu, X } from 'lucide-react';
+import { LogOut, Menu, X, Facebook, Instagram, Twitter, Mail } from 'lucide-react';
 import { logout, isAuthenticated, fetchAndUpdateUser } from '@/lib/auth';
 import { User as UserType } from '@/types/car';
 import Image from 'next/image';
@@ -19,9 +19,7 @@ export default function Navbar() {
     setMounted(true);
     updateAuthState();
 
-    const handleStorageChange = () => {
-      updateAuthState();
-    };
+    const handleStorageChange = () => updateAuthState();
     window.addEventListener('storage', handleStorageChange);
 
     const interval = setInterval(updateAuthState, 1000);
@@ -38,7 +36,7 @@ export default function Navbar() {
     const adminStatus = currentUser?.is_staff || currentUser?.is_superuser;
 
     setUser(currentUser);
-    setUserIsAdmin(adminStatus);
+    setUserIsAdmin(!!adminStatus);
 
     console.log('🔄 Auth state updated:', {
       username: currentUser?.username,
@@ -54,10 +52,9 @@ export default function Navbar() {
     setUser(null);
     setUserIsAdmin(false);
     router.push('/');
-    setIsMenuOpen(false); // close menu after logout
+    setIsMenuOpen(false);
   };
 
-  // Prevent hydration mismatch
   if (!mounted) {
     return (
       <nav className="bg-white shadow-lg sticky top-0 z-50">
@@ -71,9 +68,7 @@ export default function Navbar() {
                 height={64}
                 className="rounded-full"
               />
-              <span className="text-xl font-bold text-gray-900">
-                Cheap Rides Gh
-              </span>
+              <span className="text-xl font-bold text-gray-900">Cheap Rides Gh</span>
             </Link>
             <div className="hidden md:flex items-center space-x-8">
               <div className="w-32 h-8 bg-gray-200 animate-pulse rounded"></div>
@@ -88,7 +83,6 @@ export default function Navbar() {
     <nav className="bg-white shadow-lg sticky top-0 z-50 text-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <Image
               src="/logo2.png"
@@ -97,40 +91,25 @@ export default function Navbar() {
               height={64}
               className="rounded-full"
             />
-            <span className="text-xl font-bold text-gray-900">
-              Cheap Rides Gh
-            </span>
+            <span className="text-xl font-bold text-gray-900">Cheap Rides Gh</span>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link
-              href="/"
-              className="text-gray-700 hover:text-blue-600 transition-colors"
-            >
+            <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors">
               Home
             </Link>
-            <Link
-              href="/cars"
-              className="text-gray-700 hover:text-blue-600 transition-colors"
-            >
+            <Link href="/cars" className="text-gray-700 hover:text-blue-600 transition-colors">
               Cars
             </Link>
-            <Link
-              href="/about"
-              className="text-gray-700 hover:text-blue-600 transition-colors"
-            >
+            <Link href="/about" className="text-gray-700 hover:text-blue-600 transition-colors">
               About Us
             </Link>
             {userIsAdmin && (
-              <Link
-                href="/admin"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-              >
+              <Link href="/admin" className="text-gray-700 hover:text-blue-600 transition-colors">
                 Admin
               </Link>
             )}
-
             {user ? (
               <div className="flex items-center space-x-4">
                 <span className="text-gray-700">
@@ -167,11 +146,7 @@ export default function Navbar() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden p-2"
           >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
@@ -186,18 +161,19 @@ export default function Navbar() {
 
       {/* Mobile Menu Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-[100dvh] w-3/4 max-w-xs bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* Close button inside panel */}
+        {/* Close button inside */}
         <div className="flex justify-end p-4">
           <button onClick={() => setIsMenuOpen(false)}>
             <X className="h-6 w-6 text-gray-600" />
           </button>
         </div>
 
-        <div className="flex flex-col space-y-4 p-6">
+        {/* Links */}
+        <div className="flex flex-col space-y-4 px-6 pb-28 overflow-y-auto max-h-screen">
           <Link
             href="/"
             onClick={() => setIsMenuOpen(false)}
@@ -261,6 +237,35 @@ export default function Navbar() {
               </Link>
             </>
           )}
+        </div>
+
+        {/* Bottom Section */}
+        <div className="absolute bottom-0 w-full border-t bg-white p-6">
+          <div className="flex items-center space-x-2 mb-4">
+            <Image
+              src="/logo2.png"
+              alt="Logo"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+            <span className="font-semibold text-gray-900">Cheap Rides Gh</span>
+          </div>
+
+          <div className="flex space-x-4 text-gray-600">
+            <Link href="#" target="_blank" aria-label="Facebook">
+              <Facebook className="h-5 w-5 hover:text-blue-600" />
+            </Link>
+            <Link href="#" target="_blank" aria-label="Instagram">
+              <Instagram className="h-5 w-5 hover:text-pink-600" />
+            </Link>
+            <Link href="#" target="_blank" aria-label="Twitter">
+              <Twitter className="h-5 w-5 hover:text-sky-500" />
+            </Link>
+            <Link href="mailto:info@cheapridesgh.com" aria-label="Email">
+              <Mail className="h-5 w-5 hover:text-red-500" />
+            </Link>
+          </div>
         </div>
       </div>
     </nav>
