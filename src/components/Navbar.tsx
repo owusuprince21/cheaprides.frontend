@@ -42,26 +42,28 @@ export default function Navbar() {
 useEffect(() => {
   setMounted(true);
 
-  // Handle redirect result (mobile login)
-  getRedirectResult(auth).then((result) => {
-    if (result?.user) {
-      const displayName = result.user.displayName || "";
-      const email = result.user.email || "";
+  // 👇 This handles mobile redirect result
+  getRedirectResult(auth)
+    .then((result) => {
+      if (result?.user) {
+        const displayName = result.user.displayName || "";
+        const email = result.user.email || "";
 
-      let firstName = "";
-      if (displayName) {
-        firstName = displayName.split(" ")[0];
-      } else if (email) {
-        firstName = email.split("@")[0];
+        let firstName = "";
+        if (displayName) {
+          firstName = displayName.split(" ")[0];
+        } else if (email) {
+          firstName = email.split("@")[0];
+        }
+
+        setUser({ firstName, email });
       }
+    })
+    .catch((err) => {
+      console.error("Redirect sign-in error:", err);
+    });
 
-      setUser({ firstName, email });
-    }
-  }).catch((err) => {
-    console.error("Redirect sign-in error:", err);
-  });
-
-  // Listen for auth state changes (covers refresh, persistence)
+  // Always listen for auth state changes
   const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
     if (firebaseUser) {
       const displayName = firebaseUser.displayName || "";
