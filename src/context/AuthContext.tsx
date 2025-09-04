@@ -1,44 +1,35 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { getCurrentUser, logout as performLogout } from '@/lib/auth';
-import { User } from '@/types/car';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
-type AuthContextType = {
+interface AuthContextType {
   user: User | null;
-  login: (user: User) => void;
-  logout: () => void;
-  setUser: (user: User | null) => void; // add this
-};
+  loading: boolean;
+  logout: () => Promise<void>;
+}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
- const initAuth = async () => {
-    const currentUser = await getCurrentUser(); // supports async
-    if (currentUser) {
-      setUser(currentUser);
-    }
-    setLoading(false);
-  };
-  initAuth();
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+      setLoading(false);
+    });
+    return () => unsubscribe();
   }, []);
 
-  const login = (user: User) => {
-    setUser(user);
-  };
-
-  const logout = () => {
-    performLogout(); // clears token/localStorage
-    setUser(null);
+  const logout = async () => {
+    await auth.signOut();
   };
 
   return (
-    <AuthContext.Provider value={{  user, login, logout, setUser }}>
+    <AuthContext.Provider value={{ user, loading, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -46,8 +37,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 };
+

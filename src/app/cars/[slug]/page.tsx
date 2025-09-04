@@ -101,7 +101,6 @@ export default function CarDetailPage() {
 
 const handleContactWhatsApp = () => {
   if (!user) {
-    // Redirect using router (preferred over window.location.href)
     router.push('/auth/login');
     toast({
       title: "Login Required!",
@@ -110,13 +109,21 @@ const handleContactWhatsApp = () => {
     return;
   }
 
+  // Split displayName into first and last name
+  let firstName = "";
+  let lastName = "";
+
+  if (user.displayName) {
+    const parts = user.displayName.split(" ");
+    firstName = parts[0];
+    lastName = parts.slice(1).join(" "); // join rest as last name
+  }
 
   const adminNumber = '233557557236'; // Replace with actual admin WhatsApp number
-  const message = `Hi CheapRides Ghana, Am ${user?.first_name || ''} ${user?.last_name || ''} I'm interested in the ${car?.title} listed for ${formatPrice(car?.price || '0')}. Is it still available?`;
+  const message = `Hi CheapRides Ghana, I'm ${firstName} ${lastName}. I'm interested in the ${car?.title} listed for ${formatPrice(car?.price || '0')}. Is it still available?`;
+
   const whatsappUrl = `https://wa.me/${adminNumber}?text=${encodeURIComponent(message)}`;
   window.open(whatsappUrl, '_blank');
-
-
 };
 
   if (loading) {
@@ -273,7 +280,7 @@ const handleContactWhatsApp = () => {
                   <Gauge className="h-5 w-5 text-black" />
                   <div>
                     <p className="text-sm text-black">Mileage</p>
-                    <p className="font-semibold text-black">{car.mileage.toLocaleString()} mi</p>
+                    <p className="font-semibold text-black">{car.mileage.toLocaleString()} km</p>
                   </div>
                 </div>
                 
