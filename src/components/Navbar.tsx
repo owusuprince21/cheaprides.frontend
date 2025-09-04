@@ -16,7 +16,13 @@ import { FaXTwitter } from "react-icons/fa6";
 
 // 🔑 Firebase
 import { auth } from "@/lib/firebase";
-import { onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, signInWithRedirect, updateProfile } from "firebase/auth";
+import {   onAuthStateChanged,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+  updateProfile } from "firebase/auth";
 import Loader from "@/components/Loader";
 import { useLoading } from "@/app/layout"; 
 
@@ -33,30 +39,50 @@ export default function Navbar() {
   const { setLoading } = useLoading();
 
 
-  useEffect(() => {
-    setMounted(true);
+useEffect(() => {
+  setMounted(true);
 
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      if (firebaseUser) {
-        const displayName = firebaseUser.displayName || "";
-        const email = firebaseUser.email || "";
+  // Handle redirect result (mobile login)
+  getRedirectResult(auth).then((result) => {
+    if (result?.user) {
+      const displayName = result.user.displayName || "";
+      const email = result.user.email || "";
 
-        // Extract firstname
-        let firstName = "";
-        if (displayName) {
-          firstName = displayName.split(" ")[0];
-        } else if (email) {
-          firstName = email.split("@")[0];
-        }
-
-        setUser({ firstName, email });
-      } else {
-        setUser(null);
+      let firstName = "";
+      if (displayName) {
+        firstName = displayName.split(" ")[0];
+      } else if (email) {
+        firstName = email.split("@")[0];
       }
-    });
 
-    return () => unsubscribe();
-  }, []);
+      setUser({ firstName, email });
+    }
+  }).catch((err) => {
+    console.error("Redirect sign-in error:", err);
+  });
+
+  // Listen for auth state changes (covers refresh, persistence)
+  const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+    if (firebaseUser) {
+      const displayName = firebaseUser.displayName || "";
+      const email = firebaseUser.email || "";
+
+      let firstName = "";
+      if (displayName) {
+        firstName = displayName.split(" ")[0];
+      } else if (email) {
+        firstName = email.split("@")[0];
+      }
+
+      setUser({ firstName, email });
+    } else {
+      setUser(null);
+    }
+  });
+
+  return () => unsubscribe();
+}, []);
+
 
   // Google Sign-In
   const handleGoogleSignIn = async () => {
