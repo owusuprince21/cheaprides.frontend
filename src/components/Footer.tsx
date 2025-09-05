@@ -78,11 +78,24 @@ export default function Footer() {
                   About Us
                 </Link>
               </li>
-              <li>
-                <Link href="/auth/register" className="text-gray-300 hover:text-white transition-colors">
-                  Register
+
+                <li>
+                <Link href="#" className="text-gray-300 hover:text-white transition-colors">
+                  Our Services
                 </Link>
               </li>
+                <li>
+                <Link href="#" className="text-gray-300 hover:text-white transition-colors">
+                  Contact Us
+                </Link>
+              </li>
+
+                <li>
+                <Link href="#" className="text-gray-300 hover:text-white transition-colors">
+                  Privacy and Policy
+                </Link>
+              </li>
+              
             </ul>
           </div>
 
