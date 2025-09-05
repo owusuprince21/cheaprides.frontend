@@ -298,7 +298,7 @@ const handleLogout = async () => {
             <Link href="#" target="_blank">
               <FaXTwitter className="h-5 w-5 hover:text-sky-500" />
             </Link>
-            <Link href="mailto:info@cheapridesgh.com">
+            <Link href="mailto:cheapridesgh@gmail.com">
               <Mail className="h-5 w-5 hover:text-red-500" />
             </Link>
           </div>

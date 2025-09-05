@@ -48,6 +48,13 @@ export default function Footer() {
               >
                 <Instagram className="h-6 w-6" />
               </a>
+
+              <a
+    href="mailto:cheapridesgh@gmail.com"
+    className="text-gray-400 hover:text-red-500 transition-colors"
+  >
+    <Mail className="h-6 w-6" />
+  </a>
             </div>
           </div>
 
@@ -108,7 +115,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="h-5 w-5 text-yellow-400" />
-                <span className="text-gray-300">info@cheapridesgh.com</span>
+                <span className="text-gray-300">cheapridesgh@gmail.com</span>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="h-5 w-5 text-yellow-400" />
