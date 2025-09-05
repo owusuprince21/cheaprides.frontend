@@ -117,7 +117,7 @@ export default function Hero() {
                 <div className="text-xs sm:text-sm text-gray-600">Happy Customers</div>
               </div>
               <div className="text-center">
-                <div className="text-xl sm:text-2xl font-bold text-gray-900">5+</div>
+                <div className="text-xl sm:text-2xl font-bold text-gray-900">8+</div>
                 <div className="text-xs sm:text-sm text-gray-600">Years Experience</div>
               </div>
             </motion.div>
