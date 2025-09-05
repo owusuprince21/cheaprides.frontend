@@ -112,6 +112,12 @@ export default function Footer() {
               <li>
                 <span className="text-gray-300">Hatchbacks</span>
               </li>
+                            <li>
+                <span className="text-gray-300">Minivans</span>
+              </li>
+                            <li>
+                <span className="text-gray-300">Coupes</span>
+              </li>
               <li>
                 <span className="text-gray-300">Pickup Trucks</span>
               </li>
