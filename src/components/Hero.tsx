@@ -80,18 +80,18 @@ export default function Hero() {
               transition={{ delay: 0.7, duration: 0.6 }}
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
-              <Button 
-                size="lg" 
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold group"
-              >
-            <Link
-              href="/cars"
-              // className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-8 py-4 rounded-lg transition-colors duration-300 flex items-center space-x-2"
-            >Browse Cars
-                
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
-              </Link>
-              </Button>
+              <Button
+  size="lg"
+  className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold group"
+>
+  <Link
+    href="/cars"
+    className="flex items-center gap-2" 
+  >
+    <span>Browse Cars</span>
+    <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
+  </Link>
+</Button>
               {/* <Button 
                 variant="outline" 
                 size="lg" 
