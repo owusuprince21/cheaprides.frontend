@@ -265,7 +265,7 @@ const handleLogout = async () => {
           ) : (
             <>
 <button
-  onClick={handleMobileGoogleSignIn}
+  onClick={handleGoogleSignIn}
   className="text-gray-700 hover:text-blue-600 w-full text-left"
 >
   Get Started
