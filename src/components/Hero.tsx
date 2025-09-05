@@ -80,14 +80,12 @@ export default function Hero() {
               transition={{ delay: 0.7, duration: 0.6 }}
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
-              <Button
+<Button
+  asChild
   size="lg"
   className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold group"
 >
-  <Link
-    href="/cars"
-    className="flex items-center gap-2" 
-  >
+  <Link href="/cars" className="flex items-center gap-2">
     <span>Browse Cars</span>
     <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
   </Link>
