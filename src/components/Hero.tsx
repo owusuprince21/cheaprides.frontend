@@ -171,7 +171,7 @@ export default function Hero() {
                 className="relative z-10 -mt-5"
               >
               <Image
-                src="https://res.cloudinary.com/daebnxnfj/image/upload/v1756763666/hero_image_ti6atj.png"
+                src="https://res.cloudinary.com/daebnxnfj/image/upload/v1757075919/hero_img_vx3osp.avif"
                 alt="Luxury Car"
                 width={800}   // choose a base width
                 height={900}  // choose a base height
