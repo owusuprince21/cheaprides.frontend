@@ -6,20 +6,7 @@ import { Wrench, CreditCard, Shield, Truck, Clock, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const services = [
-  {
-    icon: CreditCard,
-    title: 'Flexible Financing',
-    description: 'Competitive rates and flexible terms to fit your budget',
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-100'
-  },
-  {
-    icon: Shield,
-    title: 'Extended Warranty',
-    description: 'Comprehensive coverage for peace of mind',
-    color: 'text-green-600',
-    bgColor: 'bg-green-100'
-  },
+
   {
     icon: Wrench,
     title: 'Expert Service',
@@ -28,15 +15,10 @@ const services = [
     bgColor: 'bg-purple-100'
   },
   {
-    icon: Truck,
-    title: 'Test Driving',
-    description: 'Complimentary test drives available',
-    color: 'text-orange-600',
-    bgColor: 'bg-orange-100'
-  },
+
   {
     icon: Clock,
-    title: '24/7 Support',
+    title: 'Reliable Support',
     description: 'Round-the-clock customer assistance',
     color: 'text-red-600',
     bgColor: 'bg-red-100'

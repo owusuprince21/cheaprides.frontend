@@ -65,7 +65,7 @@ export default function Hero() {
             >
               <div className="flex items-center">
                 <Star className="h-5 w-5 text-yellow-500 mr-2" />
-                4.0/5 Customer Rating
+                4.5/5 Customer Rating
               </div>
               <div className="flex items-center">
                 <Shield className="h-5 w-5 text-green-600 mr-2" />
