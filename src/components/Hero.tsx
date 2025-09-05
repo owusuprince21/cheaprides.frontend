@@ -87,9 +87,10 @@ export default function Hero() {
             <Link
               href="/cars"
               // className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-8 py-4 rounded-lg transition-colors duration-300 flex items-center space-x-2"
-            >Browse Cars</Link>
+            >Browse Cars
                 
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
+              </Link>
               </Button>
               {/* <Button 
                 variant="outline" 
