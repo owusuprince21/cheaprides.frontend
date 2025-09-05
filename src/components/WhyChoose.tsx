@@ -15,8 +15,6 @@ const services = [
     bgColor: 'bg-purple-100'
   },
   {
-
-  {
     icon: Clock,
     title: 'Reliable Support',
     description: 'Round-the-clock customer assistance',
