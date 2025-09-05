@@ -38,44 +38,28 @@ export default function Navbar() {
 
   const { setLoading } = useLoading();
 
-
 useEffect(() => {
   setMounted(true);
 
-  // 👇 This handles mobile redirect result
+  // 1️⃣ Check redirect result FIRST
   getRedirectResult(auth)
     .then((result) => {
       if (result?.user) {
         const displayName = result.user.displayName || "";
         const email = result.user.email || "";
-
-        let firstName = "";
-        if (displayName) {
-          firstName = displayName.split(" ")[0];
-        } else if (email) {
-          firstName = email.split("@")[0];
-        }
-
+        let firstName = displayName ? displayName.split(" ")[0] : email.split("@")[0];
         setUser({ firstName, email });
+        router.push("/"); // optional: ensure you land on home
       }
     })
-    .catch((err) => {
-      console.error("Redirect sign-in error:", err);
-    });
+    .catch((err) => console.error("Redirect error:", err));
 
-  // Always listen for auth state changes
+  // 2️⃣ Then always listen for state changes
   const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
     if (firebaseUser) {
       const displayName = firebaseUser.displayName || "";
       const email = firebaseUser.email || "";
-
-      let firstName = "";
-      if (displayName) {
-        firstName = displayName.split(" ")[0];
-      } else if (email) {
-        firstName = email.split("@")[0];
-      }
-
+      let firstName = displayName ? displayName.split(" ")[0] : email.split("@")[0];
       setUser({ firstName, email });
     } else {
       setUser(null);
@@ -83,7 +67,8 @@ useEffect(() => {
   });
 
   return () => unsubscribe();
-}, []);
+}, [router]);
+
 
 
   // Google Sign-In

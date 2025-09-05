@@ -3,11 +3,10 @@ import { initializeApp } from "firebase/app";
 import {
   getAuth,
   GoogleAuthProvider,
-  setPersistence,
   browserLocalPersistence,
+  setPersistence,
 } from "firebase/auth";
 
-// Firebase config from .env.local
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN!,
@@ -17,13 +16,13 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID!,
 };
 
-// Init
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-
-// Ensure login persists after reload
-setPersistence(auth, browserLocalPersistence);
-
 const provider = new GoogleAuthProvider();
+
+// 🔑 Force persistence on all devices
+setPersistence(auth, browserLocalPersistence).catch((err) =>
+  console.error("Persistence error:", err)
+);
 
 export { auth, provider };
