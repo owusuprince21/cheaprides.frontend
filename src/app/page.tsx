@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s | CheapRides Ghana",
   },
   description:
-    "Discover quality new and used vehicles at unbeatable prices in Ghana. Find your dream car with CheapRides Ghana today!",
+    "Discover quality new and used cars at unbeatable prices in Ghana. Your dream car is just a click away!",
   keywords: [
     "cheap cars Ghana",
     "affordable vehicles",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "CheapRides Ghana – Affordable Cars, Premium Experience",
     description:
-      "Find affordable new and used cars with detailed specs, high-quality images, and secure buying options in Ghana.",
+      "Discover quality new and used cars at unbeatable prices in Ghana. Your dream car is just a click away!",
     url: "https://cheapridesgh.com",
     siteName: "CheapRides Ghana",
     images: [
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CheapRides Ghana – Affordable Cars, Premium Experience",
     description:
-      "Discover your perfect car in Ghana with CheapRides – affordable, reliable, and premium vehicles all in one place.",
+      "Discover quality new and used cars at unbeatable prices in Ghana. Your dream car is just a click away!",
     images: [
       "https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&dpr=1",
     ],
