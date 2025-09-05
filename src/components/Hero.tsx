@@ -129,7 +129,7 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative order-first lg:order-last"
           >
-            <div className="relative h-50">
+            <div className="relative">
               {/* Background Elements */}
               <motion.div
                 animate={{ 
