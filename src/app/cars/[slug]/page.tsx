@@ -280,7 +280,7 @@ const handleContactWhatsApp = () => {
                   <Gauge className="h-5 w-5 text-black" />
                   <div>
                     <p className="text-sm text-black">Mileage</p>
-                    <p className="font-semibold text-black">{car.mileage.toLocaleString()} km</p>
+                    <p className="font-semibold text-black">{car.mileage.toLocaleString()} mi</p>
                   </div>
                 </div>
                 
@@ -335,7 +335,7 @@ const handleContactWhatsApp = () => {
                     <Zap className="h-5 w-5 text-black" />
                     <div>
                       <p className="text-sm text-black">Engine</p>
-                      <p className="font-semibold text-black">{car.engine_size}</p>
+                      <p className="font-semibold text-black">{car.engine_size}L</p>
                     </div>
                   </div>
                 )}
