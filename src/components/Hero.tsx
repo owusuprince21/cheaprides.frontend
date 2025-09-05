@@ -26,7 +26,7 @@ export default function Hero() {
               className="inline-flex items-center bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium"
             >
               <Award className="h-4 w-4 mr-2" />
-              #1 Luxury Car Dealer {new Date().getFullYear()}
+              #1 Luxury Car Dealer in Ghana
             </motion.div>
 
             {/* Main Heading */}
