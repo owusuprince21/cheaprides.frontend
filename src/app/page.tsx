@@ -6,7 +6,7 @@ import Testimonials from '@/components/Testimonials';
 
 // app/page.tsx
 import type { Metadata } from "next";
-import WhyChoose from '@/components/WhyChoose';
+import WhyChoose from "@/components/WhyChoose";
 
 export const metadata: Metadata = {
   title: "CheapRides Gh – Affordable Cars, Premium Experience",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: "CheapRides Ghana – Affordable Cars, Premium Experience",
     description:
       "Discover quality new and used vehicles at unbeatable prices in Ghana. Your dream car is just a click away!",
-    url: "https://cheapridesgh.vercel.app",
+    url: "https://cheapridesgh.com",
     siteName: "CheapRides",
     images: [
       {
@@ -48,9 +48,24 @@ export const metadata: Metadata = {
     creator: "@CheapRidesgh", // optional
   },
   icons: {
-    icon: "/favicon.ico",
-  },
+  icon: [
+    { url: "/favicon.ico" },
+    { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+    { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+  ],
+  apple: [
+    { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+  ],
+  other: [
+    { rel: "manifest", url: "/site.webmanifest" },
+    { rel: "mask-icon", url: "/safari-pinned-tab.svg", color: "#2563eb" }, // Safari pinned tabs
+  ],
+},
+themeColor: "#2563eb",
 };
+
 
 
 export default function Home() {
