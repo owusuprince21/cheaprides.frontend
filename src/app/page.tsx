@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 import WhyChoose from '@/components/WhyChoose';
 
 export const metadata: Metadata = {
-  title: "CheapRides – Find Your Perfect Cheap Rides",
+  title: "CheapRides Gh – Affordable Cars, Premium Experience",
   description:
     "Discover quality new and used vehicles at unbeatable prices in Ghana. Your dream car is just a click away!",
   keywords: [
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "affordable vehicles",
   ],
   openGraph: {
-    title: "CheapRides – Find Your Perfect Cheap Rides",
+    title: "CheapRides Ghana – Affordable Cars, Premium Experience",
     description:
       "Discover quality new and used vehicles at unbeatable prices in Ghana. Your dream car is just a click away!",
     url: "https://cheapridesgh.vercel.app",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CheapRides – Find Your Perfect Cheap Rides",
+    title: "CheapRides Ghana – Affordable Cars, Premium Experience",
     description:
       "Find affordable new and used cars with detailed specs, high-quality images, and secure buying options.",
     images: [
