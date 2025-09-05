@@ -73,7 +73,7 @@ export default function CarCard({ car, showHotSaleBadge }: CarCardProps) {
             </div>
             <div className="flex items-center space-x-1">
               <Gauge className="h-4 w-4" />
-              <span>{car.mileage.toLocaleString()} km</span>
+              <span>{car.mileage.toLocaleString()}mi</span>
             </div>
             <div className="flex items-center space-x-1">
               <Fuel className="h-4 w-4" />
