@@ -275,7 +275,7 @@ export default function RegisterPage() {
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+                    className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold cursor-pointer"
                   >
                     {isLoading ? (
                       <div className="flex items-center">
@@ -301,7 +301,7 @@ export default function RegisterPage() {
                   variant="outline"
                   onClick={handleGoogleRegister}
                   disabled={googleLoading}
-                  className="w-full h-12 border border-gray-300 bg-white text-gray-700 font-medium flex items-center justify-center space-x-3 hover:bg-gray-50"
+                  className="w-full h-12 border border-gray-300 bg-white text-gray-700 font-medium flex items-center justify-center space-x-3 hover:bg-gray-50 cursor-pointer"
                 >
                   {googleLoading ? (
                     <div className="flex items-center">
