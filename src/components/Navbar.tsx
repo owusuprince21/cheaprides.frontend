@@ -129,7 +129,7 @@ export default function Navbar() {
                   href="/auth/login"
                   className="bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700 transition-colors"
                 >
-                  Get Started
+                  Login
                 </Link>
               </div>
             )}
@@ -199,7 +199,7 @@ export default function Navbar() {
                 className="text-gray-700 hover:text-blue-600"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Get Started
+                Login
               </Link>
             </div>
           )}
