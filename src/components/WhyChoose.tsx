@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Wrench, CreditCard, Shield, Truck, Clock, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const services = [
 
@@ -91,12 +92,14 @@ export default function Services() {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <Button 
-            size="lg"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold"
-          >
-            Learn More About Our Services
-          </Button>
+<Link href="/service">
+  <Button
+    size="lg"
+    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold"
+  >
+    Learn More About Our Services
+  </Button>
+</Link>
         </motion.div>
       </div>
     </section>
