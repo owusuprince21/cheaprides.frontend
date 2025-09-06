@@ -95,7 +95,7 @@ export default function Services() {
 <Link href="/service">
   <Button
     size="lg"
-    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold"
+    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold cursor-pointer"
   >
     Learn More About Our Services
   </Button>
