@@ -18,16 +18,6 @@ export default function CarCard({ car, showHotSaleBadge }: CarCardProps) {
   const { user } = useAuth();
   const router = useRouter();
 
-    const formatPrice = (price: string) => {
-    return new Intl.NumberFormat('en-GH', {
-      style: 'currency',
-      currency: 'GHS',
-      minimumFractionDigits: 0,
-    }).format(parseFloat(price));
-    
-  };
-
-
   const handleContactWhatsApp = () => {
     if (!user) {
       router.push('/auth/login');
@@ -56,16 +46,35 @@ export default function CarCard({ car, showHotSaleBadge }: CarCardProps) {
     window.open(whatsappUrl, '_blank');
   };
 
+  const formatPrice = (price: string) => {
+    return new Intl.NumberFormat('en-GH', {
+      style: 'currency',
+      currency: 'GHS',
+      minimumFractionDigits: 0,
+    }).format(parseFloat(price));
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-500 flex flex-col">
       {/* Car Image */}
       <div className="relative w-full h-64">
-        <Image src={car.main_image} alt={car.title} fill className="object-cover w-full h-full" />
+        <Image
+          src={
+            car.additional_images?.[0]?.image
+              ? `https://res.cloudinary.com/daebnxnfj/${car.additional_images[0].image}`
+              : `https://res.cloudinary.com/daebnxnfj/${car.main_image}`
+          }
+          alt={car.title}
+          fill
+          className="object-cover w-full h-full"
+        />
+
         {showHotSaleBadge && (
           <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-md">
             Hot Sale
           </div>
         )}
+
         {car.condition && (
           <span className="absolute top-3 right-3 bg-black text-white px-3 py-1 rounded-full text-sm font-semibold shadow-md">
             {car.condition.toUpperCase()}
@@ -76,11 +85,9 @@ export default function CarCard({ car, showHotSaleBadge }: CarCardProps) {
       {/* Car Info */}
       <div className="p-4 flex-1 flex flex-col justify-between">
         <div className="mb-3">
-          <h3 className="text-gray-900 text-lg font-semibold uppercase">{car.title}</h3>
+          <h3 className="text-gray-900 text-lg font-semibold uppercase line-clamp-2">{car.title}</h3>
           <div className="flex justify-between items-center mt-1">
-            <p className="text-blue-600 font-bold text-xl">
-              {formatPrice(car.price)}
-            </p>
+            <p className="text-blue-600 font-bold text-xl">{formatPrice(car.price)}</p>
             <p className="text-gray-500 font-medium text-sm">{car.make.toUpperCase()}</p>
           </div>
         </div>
