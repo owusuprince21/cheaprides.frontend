@@ -3,129 +3,61 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {
-  LogOut,
-  Menu,
-  X,
-  Facebook,
-  Instagram,
-  Mail,
-} from "lucide-react";
+import { LogOut, Menu, X, Facebook, Instagram, Mail } from "lucide-react";
 import Image from "next/image";
 import { FaXTwitter } from "react-icons/fa6";
 
-// 🔑 Firebase
+// Firebase
 import { auth } from "@/lib/firebase";
-import {   onAuthStateChanged,
-  signOut,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithRedirect,
-  getRedirectResult,
-  updateProfile } from "firebase/auth";
-import Loader from "@/components/Loader";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useLoading } from "@/app/layout"; 
-
 
 export default function Navbar() {
   const [user, setUser] = useState<any>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
-  // const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [loggingOut, setLoggingOut] = useState(false);
-
   const { setLoading } = useLoading();
 
-useEffect(() => {
-  setMounted(true);
+  useEffect(() => {
+    setMounted(true);
 
-  // 1️⃣ Check redirect result FIRST
-  getRedirectResult(auth)
-    .then((result) => {
-      if (result?.user) {
-        const displayName = result.user.displayName || "";
-        const email = result.user.email || "";
-        let firstName = displayName ? displayName.split(" ")[0] : email.split("@")[0];
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        const displayName = firebaseUser.displayName || "";
+        const email = firebaseUser.email || "";
+
+        // Extract firstname
+        let firstName = "";
+        if (displayName) {
+          firstName = displayName.split(" ")[0];
+        } else if (email) {
+          firstName = email.split("@")[0];
+        }
+
         setUser({ firstName, email });
-        router.push("/"); // optional: ensure you land on home
+      } else {
+        setUser(null);
       }
-    })
-    .catch((err) => console.error("Redirect error:", err));
+    });
 
-  // 2️⃣ Then always listen for state changes
-  const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-    if (firebaseUser) {
-      const displayName = firebaseUser.displayName || "";
-      const email = firebaseUser.email || "";
-      let firstName = displayName ? displayName.split(" ")[0] : email.split("@")[0];
-      setUser({ firstName, email });
-    } else {
-      setUser(null);
-    }
-  });
+    return () => unsubscribe();
+  }, []);
 
-  return () => unsubscribe();
-}, [router]);
-
-
-
-  // Google Sign-In
-  const handleGoogleSignIn = async () => {
-    setError("");
-    setLoading(true);
+  const handleLogout = async () => {
     try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
-      if (user.displayName) {
-        const [gFirst, gLast] = user.displayName.split(" ");
-        await updateProfile(user, {
-          displayName: `${gFirst || ""} ${gLast || ""}`,
-        });
-      }
-
-      router.push("/"); // ✅ go home
-    } catch (err: any) {
-      setError(err.message || "Google sign-in failed");
+      setLoading(true);
+      await signOut(auth);
+      setUser(null);
+      setIsMenuOpen(false);
+      await new Promise((resolve) => setTimeout(resolve, 700));
+      router.push("/");
+    } catch (err) {
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
-
-const provider = new GoogleAuthProvider();
-
-const handleMobileGoogleSignIn = () => {
-  try {
-    signInWithRedirect(auth, provider); // must be synchronous inside click handler
-    setIsMenuOpen(false);            // optional: close menu after popup triggered
-  } catch (err) {
-    console.error("Google sign-in error:", err);
-  }
-};
-
-
-const handleLogout = async () => {
-  try {
-    setLoading(true); // show loader immediately
-
-    // Wait for Firebase sign-out
-    await signOut(auth);
-    setUser(null);
-    setIsMenuOpen(false);
-
-    // Force minimum loader time (optional)
-    await new Promise((resolve) => setTimeout(resolve, 700));
-
-    router.push("/"); // redirect after logout
-  } catch (err) {
-    console.error(err);
-  } finally {
-    setLoading(false); // hide loader
-  }
-};
-
 
   if (!mounted) {
     return (
@@ -154,7 +86,6 @@ const handleLogout = async () => {
   }
 
   return (
-    
     <nav className="bg-white shadow-lg sticky top-0 z-50 text-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -188,19 +119,18 @@ const handleLogout = async () => {
                   onClick={handleLogout}
                   className="flex items-center space-x-1 text-gray-700 hover:text-red-600"
                 >
-      
                   <LogOut className="h-4 w-4" />
                   <span>Logout</span>
                 </button>
               </div>
             ) : (
               <div className="flex items-center space-x-4">
-                <button
-    onClick={handleGoogleSignIn}
-    className="bg-blue-600 text-white px-2 py-1 rounded-lg hover:bg-blue-700"
-  >
-    SignIn with Google Account
-  </button>
+                <Link
+                  href="/auth/login"
+                  className="bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Get Started
+                </Link>
               </div>
             )}
           </div>
@@ -258,21 +188,20 @@ const handleLogout = async () => {
                 onClick={handleLogout}
                 className="flex items-center space-x-1 text-gray-700 hover:text-red-600 w-fit"
               >
-                <LogOut className="h-4 w-4" />
+                <LogOut className="h-4 w-4 cursor-pointer" />
                 <span>Logout</span>
               </button>
             </>
           ) : (
-            <>
-<button
-  onClick={handleGoogleSignIn}
-  className="text-gray-700 hover:text-blue-600 w-full text-left"
->
-  SignIn with Google Account
-</button>
-
-
-            </>
+            <div className="flex items-center space-x-4">
+              <Link
+                href="/auth/login"
+                className="text-gray-700 hover:text-blue-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Get Started
+              </Link>
+            </div>
           )}
         </div>
 
@@ -298,7 +227,7 @@ const handleLogout = async () => {
             <Link href="#" target="_blank">
               <FaXTwitter className="h-5 w-5 hover:text-sky-500" />
             </Link>
-            <Link href="mailto:cheapridesgh@gmail.com">
+            <Link href="mailto:info@cheapridesgh.com">
               <Mail className="h-5 w-5 hover:text-red-500" />
             </Link>
           </div>

@@ -1,271 +1,317 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Eye, EyeOff } from "lucide-react";
-import Image from "next/image";
-import { FcGoogle } from "react-icons/fc";
+import { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@radix-ui/react-separator';
+import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
-// 🔑 Firebase
-import { auth, provider } from "@/lib/firebase";
+// Firebase wrapper
 import {
-  onAuthStateChanged,
+  auth,
+  provider,
+  signInWithPopup,
   createUserWithEmailAndPassword,
   updateProfile,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
+} from '@/lib/firebase';
+import { FcGoogle } from 'react-icons/fc';
 
 export default function RegisterPage() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { toast } = useToast();
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
-  const router = useRouter();
 
-  // 🔄 Redirect if already signed in
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        if (user.emailVerified || user.providerData[0]?.providerId === "google.com") {
-          router.push("/"); // ✅ verified or Google user → go home
-        } else {
-          setMessage("Please verify your email before logging in.");
-          signOut(auth); // 🚫 kick unverified email/password user
-        }
-      }
-    });
-    return () => unsubscribe();
-  }, [router]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
-const handleRegister = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setError("");
-  setMessage("");
-  setLoading(true);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  try {
-    // 1️⃣ Create Firebase user
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-    // 2️⃣ Save full name
-    await updateProfile(userCredential.user, {
-      displayName: `${firstName} ${lastName}`,
-    });
-
-    // 3️⃣ Call Django API to send verification email
-    try {
-      const response = await fetch("http://localhost:8000/api/send-verification/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+    if (!firstName.trim() || !lastName.trim()) {
+      toast({
+        title: 'Name required',
+        description: 'Please enter your first and last name.',
+        variant: 'destructive',
       });
-
-      // DEBUG: log raw response text
-      const text = await response.text();
-      console.log("Django response text:", text);
-
-      let data;
-      try {
-        data = JSON.parse(text);
-      } catch (e) {
-        throw new Error("Server did not return JSON. Check console for HTML response.");
-      }
-
-      if (!data.success) {
-        setError(data.error || "Failed to send verification email.");
-        return;
-      }
-
-    } catch (err: any) {
-      console.error("Django verification email error:", err);
-      setError(err.message || "Failed to send verification email.");
+      return;
+    }
+    if (password.length < 6) {
+      toast({
+        title: 'Weak password',
+        description: 'Password should be at least 6 characters.',
+        variant: 'destructive',
+      });
       return;
     }
 
-    // 4️⃣ Show success message
-    setMessage(
-      `Account created! A verification link was sent to ${email}. Please verify before logging in.`
-    );
+    setIsLoading(true);
 
-    // Optional: clear form
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPassword("");
+    try {
+      const userCred = await createUserWithEmailAndPassword(auth, email, password);
 
-  } catch (err: any) {
-    setError(err.message || "Registration failed");
-  } finally {
-    setLoading(false);
-  }
-};
+      await updateProfile(userCred.user, {
+        displayName: `${firstName.trim()} ${lastName.trim()}`,
+      });
 
+      const name = userCred.user.displayName || email.split('@')[0];
 
-  // 📌 Google Sign-In
-  const handleGoogleSignIn = async () => {
-    setError("");
-    setLoading(true);
+      toast({
+        title: 'Account created',
+        description: `Welcome, ${name}!`,
+      });
+
+      window.location.href = '/';
+    } catch (err: any) {
+      let message = 'Something went wrong. Please try again.';
+      if (err?.code === 'auth/email-already-in-use') {
+        message = 'This email is already in use. Try another email.';
+      } else if (err?.code === 'auth/weak-password') {
+        message = 'Password is too weak. Use at least 6 characters.';
+      } else if (err?.code === 'auth/invalid-email') {
+        message = 'Invalid email address.';
+      }
+
+      toast({
+        title: 'Registration failed',
+        description: message,
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleRegister = async () => {
+    if (googleLoading) return;
+    setGoogleLoading(true);
+
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+      const name = user.displayName || user.email?.split('@')[0];
 
-      if (user.displayName) {
-        const [gFirst, gLast] = user.displayName.split(" ");
-        await updateProfile(user, {
-          displayName: `${gFirst || ""} ${gLast || ""}`,
-        });
-      }
+      toast({
+        title: 'Welcome 🎉',
+        description: `Signed in as ${name}`,
+      });
 
-      router.push("/"); // ✅ go home
+      window.location.href = '/';
     } catch (err: any) {
-      setError(err.message || "Google sign-in failed");
+      let message = err?.message || 'Google sign-in failed';
+      if (err?.code === 'auth/cancelled-popup-request' || err?.code === 'auth/popup-closed-by-user') {
+        message = 'Google sign-in cancelled.';
+      }
+      toast({
+        title: 'Google sign-in failed',
+        description: message,
+        variant: 'destructive',
+      });
     } finally {
-      setLoading(false);
+      setGoogleLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <Image
-            src="/logo2.png"
-            alt="Logo"
-            width={100}
-            height={100}
-            className="rounded-full"
-          />
+    <div className="h-screen flex flex-col lg:flex-row">
+      {/* Left Side - Desktop */}
+      <div className="hidden lg:flex lg:w-1/2 h-full relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-black/40 z-10" />
+        <Image
+          src="https://res.cloudinary.com/daebnxnfj/image/upload/v1756763666/hero_image_ti6atj.png"
+          alt="Luxury Car Showroom"
+          fill
+          priority
+          className="object-contain"
+        />
+        <div className="absolute inset-0 z-20 flex flex-col justify-end p-12 text-white">
+          <div className="backdrop-blur-md bg-white/10 rounded-2xl p-4 shadow-lg max-w-sm">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-12 h-12 relative rounded-full overflow-hidden bg-white shadow-md">
+                <Image src="/logo2.png" alt="CheapRides Logo" fill className="object-contain p-1" priority />
+              </div>
+              <span className="text-2xl font-bold">CheapRides Gh</span>
+            </div>
+            <h2 className="text-3xl font-bold mb-2 leading-tight">Create Account</h2>
+            <p className="text-base text-gray-100 leading-relaxed">
+              Join CheapRides Gh and start browsing premium vehicles with confidence.
+            </p>
+          </div>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-          Create your account
-        </h2>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md mb-4">
-              {error}
-            </div>
-          )}
-          {message && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md mb-4">
-              {message}
-            </div>
-          )}
-
-          {/* Email + Password Form */}
-          <form className="space-y-6" onSubmit={handleRegister}>
-            <div>
-              <label
-                htmlFor="firstName"
-                className="block text-sm font-medium text-gray-700"
-              >
-                First Name
-              </label>
-              <input
-                id="firstName"
-                type="text"
-                required
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your first name"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="lastName"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Last Name
-              </label>
-              <input
-                id="lastName"
-                type="text"
-                required
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your last name"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Email address
-              </label>
-              <input
-                id="email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your email"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Password
-              </label>
-              <div className="mt-1 relative">
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Create a password"
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400" />
-                  ) : (
-                    <Eye className="h-5 w-5 text-gray-400" />
-                  )}
-                </button>
+      {/* Right Side - Form */}
+      <div className="w-full lg:w-1/2 h-full flex flex-col overflow-y-auto bg-gray-50">
+        {/* Mobile Hero */}
+        <div className="lg:hidden relative h-64">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/50 z-10" />
+          <Image
+            src="https://res.cloudinary.com/daebnxnfj/image/upload/v1756763666/hero_image_ti6atj.png"
+            alt="Luxury Car"
+            fill
+            priority
+            className="object-contain"
+          />
+          <div className="absolute inset-0 z-20 flex items-center justify-center">
+            <div className="text-center text-white">
+              <div className="flex items-center justify-center space-x-2 mb-2">
+                <div className="w-10 h-10 relative rounded-full overflow-hidden bg-black/70 flex items-center justify-center">
+                  <Image src="/logo2.png" alt="Logo" fill className="object-contain" priority />
+                </div>
+                <span className="text-2xl font-bold">CheapRides Gh</span>
               </div>
+              <p className="text-sm opacity-90">Premium Automotive Experience</p>
             </div>
+          </div>
+        </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50"
-            >
-              {loading ? "Creating account..." : "Create account"}
-            </button>
-          </form>
+        {/* Form Container */}
+        <div className="flex-1 flex justify-center p-6 lg:p-12">
+          <div className="w-full max-w-md">
+            <Card className="shadow-2xl border-0 bg-white">
+              <CardHeader className="space-y-2 pb-6">
+                <CardTitle className="text-3xl font-bold text-center text-gray-900">Create Account</CardTitle>
+                <p className="text-center text-gray-600">Register to CheapRides Gh</p>
+              </CardHeader>
 
-          <hr className="my-6 border-gray-300" />
+              <CardContent className="flex flex-col space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* First Name */}
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName">First name</Label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <Input
+                        id="firstName"
+                        type="text"
+                        required
+                        placeholder="John"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        className="pl-10 h-12"
+                      />
+                    </div>
+                  </div>
 
-          {/* Google Sign-In */}
-          <button
-            onClick={handleGoogleSignIn}
-            disabled={loading}
-            className="w-full flex items-center justify-center space-x-2 py-2 px-4 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 shadow-sm disabled:opacity-50"
-          >
-            <FcGoogle className="h-5 w-5" />
-            <span>{loading ? "Signing in..." : "Sign in with Google"}</span>
-          </button>
+                  {/* Last Name */}
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName">Last name</Label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <Input
+                        id="lastName"
+                        type="text"
+                        required
+                        placeholder="Doe"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        className="pl-10 h-12"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Email */}
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email Address</Label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <Input
+                        id="email"
+                        type="email"
+                        required
+                        placeholder="you@example.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="pl-10 h-12"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Password */}
+                  <div className="space-y-2">
+                    <Label htmlFor="password">Password</Label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <Input
+                        id="password"
+                        type={showPassword ? 'text' : 'password'}
+                        required
+                        placeholder="Create a secure password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="pl-10 pr-10 h-12"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      >
+                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Submit */}
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+                  >
+                    {isLoading ? (
+                      <div className="flex items-center">
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                        Creating Account...
+                      </div>
+                    ) : (
+                      'Sign Up'
+                    )}
+                  </Button>
+                </form>
+
+<div className="flex items-center my-6">
+  <Separator className="flex-grow bg-gray-300 h-px" />
+  <span className="mx-4 text-gray-500 text-sm">OR</span>
+  <Separator className="flex-grow bg-gray-300 h-px" />
+</div>
+
+                {/* Google Login */}
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleGoogleRegister}
+                  disabled={googleLoading}
+                  className="w-full h-12 border-2 border-gray-300 hover:border-gray-400 text-gray-700 font-semibold cursor-pointer"
+                >
+                  {googleLoading ? (
+                    <div className="flex items-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-700 mr-2"></div>
+                      Logging in with Google...
+                    </div>
+                  ) : (
+                    <>
+                      <FcGoogle className="w-5 h-5 mr-3" />
+                      Continue with Google
+                    </>
+                  )}
+                </Button>
+                {/* Already have account */}
+                <p className="text-center text-sm text-gray-600 mt-4">
+                  Already have an account?{' '}
+                  <Link href="/auth/login" className="text-blue-600 hover:underline">
+                    Login
+                  </Link>
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
