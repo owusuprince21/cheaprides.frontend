@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { LogOut, Menu, X, Facebook, Instagram, Mail } from "lucide-react";
 import Image from "next/image";
 import { FaXTwitter } from "react-icons/fa6";
+import { ChevronDown } from 'lucide-react';
 
 // Firebase
 import { auth } from "@/lib/firebase";
@@ -18,6 +19,16 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const { setLoading } = useLoading();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const services = [
+    { title: 'Main Services', href: '/service' },
+    { title: 'Body Works', href: '/service/body-works' },
+    { title: 'Auto Spraying', href: '/service/auto-spraying' },
+    { title: 'Body Kit Replacement', href: '/service/body-kit' },
+    { title: 'Vehicle Tinting Services', href: '/service/vehicle-tinting' },
+    { title: 'Vehicle Spare Parts & Accessories', href: '/service/spare-parts' },
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -112,6 +123,41 @@ export default function Navbar() {
             <Link href="/about" className="text-gray-700 hover:text-blue-600">
               About Us
             </Link>
+
+         {/* Services Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)} // toggle on mobile
+              onMouseEnter={() => setDropdownOpen(true)}     // open on hover desktop
+              onMouseLeave={() => setDropdownOpen(false)}    // close on hover desktop
+              className="flex items-center space-x-1 text-gray-800 hover:text-blue-600 font-medium"
+            >
+              <span>Services</span>
+              <ChevronDown className="w-4 h-4" />
+            </button>
+
+            {/* Dropdown Menu */}
+            <div
+              className={`absolute left-0 mt-2 w-60 bg-white shadow-lg rounded-lg border border-gray-200 z-50 transition-all duration-200
+                ${dropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+              onMouseEnter={() => setDropdownOpen(true)}
+              onMouseLeave={() => setDropdownOpen(false)}
+            >
+              {services.map((service, idx) => (
+                <Link
+                  key={idx}
+                  href={service.href}
+                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white transition-colors"
+                  onClick={() => setDropdownOpen(false)} // close menu on mobile after click
+                >
+                  {service.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+
+
             {user ? (
               <div className="flex items-center space-x-4">
                 <span className="text-gray-700">Welcome, {user.firstName}!</span>
@@ -181,6 +227,40 @@ export default function Navbar() {
             About Us
           </Link>
 
+         {/* Services Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)} // toggle on mobile
+              onMouseEnter={() => setDropdownOpen(true)}     // open on hover desktop
+              onMouseLeave={() => setDropdownOpen(false)}    // close on hover desktop
+              className="flex items-center space-x-1 text-gray-800 hover:text-blue-600 font-medium"
+            >
+              <span>Services</span>
+              <ChevronDown className="w-4 h-4" />
+            </button>
+
+            {/* Dropdown Menu */}
+            <div
+              className={`absolute left-0 mt-2 w-60 bg-white shadow-lg rounded-lg border border-gray-200 z-50 transition-all duration-200
+                ${dropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+              onMouseEnter={() => setDropdownOpen(true)}
+              onMouseLeave={() => setDropdownOpen(false)}
+            >
+              {services.map((service, idx) => (
+                <Link
+                  key={idx}
+                  href={service.href}
+                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {service.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+
+
           {user ? (
             <>
               <span className="text-gray-700">Welcome, {user.firstName}</span>
@@ -199,7 +279,7 @@ export default function Navbar() {
                 className="text-gray-700 hover:text-blue-600"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Login
+               Login
               </Link>
             </div>
           )}
