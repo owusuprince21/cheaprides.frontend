@@ -148,7 +148,7 @@ export default function RegisterPage() {
               <span className="text-2xl font-bold">CheapRides Gh</span>
             </div>
 
-            <h2 className="text-3xl font-bold mb-2 leading-tight">Create Account</h2>
+            <h2 className="text-1xl font-bold mb-2 leading-tight">Create Account</h2>
             <p className="text-base text-gray-100 leading-relaxed">
               Join CheapRides Gh and start browsing premium vehicles with confidence.
             </p>
