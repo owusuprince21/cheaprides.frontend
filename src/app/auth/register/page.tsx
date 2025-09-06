@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@radix-ui/react-separator';
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { FcGoogle } from 'react-icons/fc';
 
 // Firebase wrapper
 import {
@@ -19,7 +20,6 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from '@/lib/firebase';
-import { FcGoogle } from 'react-icons/fc';
 
 export default function RegisterPage() {
   const { toast } = useToast();
@@ -54,7 +54,6 @@ export default function RegisterPage() {
     }
 
     setIsLoading(true);
-
     try {
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
 
@@ -65,7 +64,7 @@ export default function RegisterPage() {
       const name = userCred.user.displayName || email.split('@')[0];
 
       toast({
-        title: 'Account created',
+        title: 'Account created 🎉',
         description: `Welcome, ${name}!`,
       });
 
@@ -73,9 +72,9 @@ export default function RegisterPage() {
     } catch (err: any) {
       let message = 'Something went wrong. Please try again.';
       if (err?.code === 'auth/email-already-in-use') {
-        message = 'This email is already in use. Try another email.';
+        message = 'This email is already in use.';
       } else if (err?.code === 'auth/weak-password') {
-        message = 'Password is too weak. Use at least 6 characters.';
+        message = 'Password is too weak.';
       } else if (err?.code === 'auth/invalid-email') {
         message = 'Invalid email address.';
       }
@@ -121,17 +120,25 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="h-screen flex flex-col lg:flex-row">
-      {/* Left Side - Desktop */}
-      <div className="hidden lg:flex lg:w-1/2 h-full relative">
+    // min-h-screen -> allows natural scroll on small devices; flex-row at lg
+    <div className="min-h-screen flex">
+      {/* ----------------------------
+          LEFT SIDE - Desktop only
+          hidden on mobile, visible on lg+
+         ---------------------------- */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+        {/* gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-black/40 z-10" />
+        {/* image fills container height on desktop */}
         <Image
           src="https://res.cloudinary.com/daebnxnfj/image/upload/v1756763666/hero_image_ti6atj.png"
           alt="Luxury Car Showroom"
           fill
           priority
-          className="object-contain"
+          className="w-full h-full object-cover"
         />
+
+        {/* overlay card */}
         <div className="absolute inset-0 z-20 flex flex-col justify-end p-12 text-white">
           <div className="backdrop-blur-md bg-white/10 rounded-2xl p-4 shadow-lg max-w-sm">
             <div className="flex items-center space-x-3 mb-4">
@@ -140,6 +147,7 @@ export default function RegisterPage() {
               </div>
               <span className="text-2xl font-bold">CheapRides Gh</span>
             </div>
+
             <h2 className="text-3xl font-bold mb-2 leading-tight">Create Account</h2>
             <p className="text-base text-gray-100 leading-relaxed">
               Join CheapRides Gh and start browsing premium vehicles with confidence.
@@ -148,10 +156,12 @@ export default function RegisterPage() {
         </div>
       </div>
 
-      {/* Right Side - Form */}
-      <div className="w-full lg:w-1/2 h-full flex flex-col overflow-y-auto bg-gray-50">
-        {/* Mobile Hero */}
-        <div className="lg:hidden relative h-64">
+      {/* ----------------------------
+          RIGHT SIDE - Form (mobile + desktop)
+         ---------------------------- */}
+      <div className="w-full lg:w-1/2 flex flex-col">
+        {/* MOBILE HERO - shown only on small screens */}
+        <div className="lg:hidden relative h-64 w-full">
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/50 z-10" />
           <Image
             src="https://res.cloudinary.com/daebnxnfj/image/upload/v1756763666/hero_image_ti6atj.png"
@@ -173,16 +183,18 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        {/* Form Container */}
-        <div className="flex-1 flex justify-center p-6 lg:p-12">
+        {/* FORM CONTAINER */}
+        <div className="flex-1 flex items-center justify-center p-6 lg:p-12 bg-gray-50 overflow-y-auto">
           <div className="w-full max-w-md">
             <Card className="shadow-2xl border-0 bg-white">
               <CardHeader className="space-y-2 pb-6">
-                <CardTitle className="text-3xl font-bold text-center text-gray-900">Create Account</CardTitle>
+                <CardTitle className="text-3xl font-bold text-center text-gray-900">
+                  Create Account
+                </CardTitle>
                 <p className="text-center text-gray-600">Register to CheapRides Gh</p>
               </CardHeader>
 
-              <CardContent className="flex flex-col space-y-6">
+              <CardContent className="space-y-6">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* First Name */}
                   <div className="space-y-2">
@@ -196,7 +208,7 @@ export default function RegisterPage() {
                         placeholder="John"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
-                        className="pl-10 h-12"
+                        className="pl-10 h-12 text-base"
                       />
                     </div>
                   </div>
@@ -213,7 +225,7 @@ export default function RegisterPage() {
                         placeholder="Doe"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
-                        className="pl-10 h-12"
+                        className="pl-10 h-12 text-base"
                       />
                     </div>
                   </div>
@@ -230,7 +242,7 @@ export default function RegisterPage() {
                         placeholder="you@example.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10 h-12"
+                        className="pl-10 h-12 text-base"
                       />
                     </div>
                   </div>
@@ -247,7 +259,7 @@ export default function RegisterPage() {
                         placeholder="Create a secure password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="pl-10 pr-10 h-12"
+                        className="pl-10 pr-10 h-12 text-base"
                       />
                       <button
                         type="button"
@@ -276,32 +288,34 @@ export default function RegisterPage() {
                   </Button>
                 </form>
 
-<div className="flex items-center my-6">
-  <Separator className="flex-grow bg-gray-300 h-px" />
-  <span className="mx-4 text-gray-500 text-sm">OR</span>
-  <Separator className="flex-grow bg-gray-300 h-px" />
-</div>
+                {/* Divider using Radix Separator */}
+                <div className="flex items-center my-6">
+                  <Separator className="flex-grow h-px bg-gray-300" />
+                  <span className="mx-4 text-gray-500 text-sm">OR</span>
+                  <Separator className="flex-grow h-px bg-gray-300" />
+                </div>
 
-                {/* Google Login */}
+                {/* Google Register */}
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handleGoogleRegister}
                   disabled={googleLoading}
-                  className="w-full h-12 border-2 border-gray-300 hover:border-gray-400 text-gray-700 font-semibold cursor-pointer"
+                  className="w-full h-12 border border-gray-300 bg-white text-gray-700 font-medium flex items-center justify-center space-x-3 hover:bg-gray-50"
                 >
                   {googleLoading ? (
                     <div className="flex items-center">
                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-700 mr-2"></div>
-                      Logging in with Google...
+                      Signing up with Google...
                     </div>
                   ) : (
                     <>
-                      <FcGoogle className="w-5 h-5 mr-3" />
-                      Continue with Google
+                      <FcGoogle className="w-5 h-5" />
+                      <span>Continue with Google</span>
                     </>
                   )}
                 </Button>
+
                 {/* Already have account */}
                 <p className="text-center text-sm text-gray-600 mt-4">
                   Already have an account?{' '}

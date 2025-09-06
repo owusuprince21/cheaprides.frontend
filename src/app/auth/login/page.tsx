@@ -12,7 +12,7 @@ import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { FcGoogle } from 'react-icons/fc';
 import { useToast } from '@/hooks/use-toast';
 
-// 
+// ✅ Firebase imports
 import {
   auth,
   provider,
@@ -83,7 +83,7 @@ export default function LoginPage() {
     }
   };
 
-  // Google Login
+  // ✅ Google Login
   const handleGoogleLogin = async () => {
     if (googleLoading) return;
     setGoogleLoading(true);
@@ -112,16 +112,16 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="h-screen flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden">
+    <div className="min-h-screen flex">
       {/* Left Side - Car Image */}
-      <div className="hidden lg:flex lg:w-1/2 h-screen relative">
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-black/40 z-10" />
         <Image
           src="https://res.cloudinary.com/daebnxnfj/image/upload/v1756763666/hero_image_ti6atj.png"
           alt="Luxury Car Showroom"
           fill
           priority
-          className="object-contain"
+          className="w-full h-full object-cover"
         />
 
         {/* Overlay Content */}
@@ -139,7 +139,7 @@ export default function LoginPage() {
               </div>
               <span className="text-2xl font-bold">CheapRides Gh</span>
             </div>
-            <h2 className="text-3xl font-bold mb-2 leading-tight">
+            <h2 className="text-1xl font-bold mb-2 leading-tight">
               Premium Vehicles
             </h2>
             <p className="text-base text-gray-100 leading-relaxed">
@@ -151,9 +151,9 @@ export default function LoginPage() {
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 h-screen flex flex-col">
+      <div className="w-full lg:w-1/2 flex flex-col">
         {/* Mobile Car Image */}
-        <div className="lg:hidden relative h-64">
+        <div className="lg:hidden relative h-64 w-full">
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/50 z-10" />
           <Image
             src="https://res.cloudinary.com/daebnxnfj/image/upload/v1756763666/hero_image_ti6atj.png"
@@ -184,7 +184,7 @@ export default function LoginPage() {
         </div>
 
         {/* Login Form Container */}
-        <div className="flex-1 flex items-center justify-center p-6 lg:p-12 bg-gray-50">
+        <div className="flex-1 flex items-center justify-center p-6 lg:p-12 bg-gray-50 overflow-y-auto">
           <div className="w-full max-w-md">
             <Card className="shadow-2xl border-0 bg-white">
               <CardHeader className="space-y-2 pb-8">
@@ -212,7 +212,7 @@ export default function LoginPage() {
                         onChange={(e) =>
                           handleInputChange('email', e.target.value)
                         }
-                        className="pl-10 h-12"
+                        className="pl-10 h-12 text-base"
                       />
                     </div>
                   </div>
@@ -230,7 +230,7 @@ export default function LoginPage() {
                         onChange={(e) =>
                           handleInputChange('password', e.target.value)
                         }
-                        className="pl-10 pr-10 h-12"
+                        className="pl-10 h-12 text-base"
                       />
                       <button
                         type="button"
